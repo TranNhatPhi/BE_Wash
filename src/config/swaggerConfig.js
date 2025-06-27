@@ -33,7 +33,7 @@ const options = {
         security: [{ BearerAuth: [] }], // ⚠️ Bảo vệ tất cả endpoint bằng JWT nếu không override
     },
     // apis: ["./src/routes/*.js"], // Đường dẫn đến file Swagger comment
-    apis: ["./routes/*.js"], product
+    apis: ["./routes/*.js"], // product
 };
 
 const swaggerSpec = swaggerJsdoc(options);
