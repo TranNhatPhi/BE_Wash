@@ -1,7 +1,9 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.BASE_URL || "http://localhost:5000";
 
 const options = {
     definition: {
