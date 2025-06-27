@@ -27,7 +27,9 @@ app.use("/api/customers", require("./routes/customer"));
 app.use("/api/customers-vehicles", require("./routes/customerVehicle"));
 
 // 🚀 Khởi động server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server đang chạy trên cổng ${PORT}`);
-});
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//     console.log(`🚀 Server đang chạy trên cổng ${PORT}`);
+// });
+// Export cho Vercel (không dùng app.listen)
+module.exports = app;
