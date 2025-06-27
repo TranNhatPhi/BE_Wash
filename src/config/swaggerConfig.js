@@ -1,28 +1,7 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const path = require("path");
 
-// Xác định base URL cho Vercel
-const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.BASE_URL || "http://localhost:5000";
-
-// Xác định đường dẫn routes cho Vercel
-const getRoutesPath = () => {
-    if (process.env.VERCEL) {
-        // Trên Vercel, đường dẫn tương đối từ src/config/
-        return [
-            path.join(__dirname, "../routes/auth.js"),
-            path.join(__dirname, "../routes/vehicle.js"),
-            path.join(__dirname, "../routes/service.js"),
-            path.join(__dirname, "../routes/customer.js"),
-            path.join(__dirname, "../routes/customerVehicle.js"),
-        ];
-    } else {
-        // Local development
-        return ["./src/routes/*.js"];
-    }
-};
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 const options = {
     definition: {
@@ -39,7 +18,7 @@ const options = {
         servers: [
             {
                 url: baseUrl,
-                description: process.env.VERCEL ? "� Vercel Production" : "🔧 Local Server"
+                description: baseUrl.includes("localhost") ? "🔧 Local Server" : "🚀 Production Server"
             }
         ],
         components: {
@@ -53,7 +32,8 @@ const options = {
         },
         security: [{ BearerAuth: [] }], // ⚠️ Bảo vệ tất cả endpoint bằng JWT nếu không override
     },
-    apis: getRoutesPath(), // Đường dẫn động cho local và Vercel
+    apis: ["./src/routes/*.js"], // Đường dẫn đến file Swagger comment
+    //apis: ["./routes/*.js"], product
 };
 
 const swaggerSpec = swaggerJsdoc(options);
