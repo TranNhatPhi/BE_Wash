@@ -26,8 +26,14 @@ const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log("✅ [DB] Kết nối cơ sở dữ liệu thành công!");
+        return true;
     } catch (error) {
         console.error("❌ [DB] Kết nối thất bại:", error.message);
+        // Trên Vercel, không nên thoát process
+        if (!process.env.VERCEL) {
+            process.exit(1);
+        }
+        return false;
         process.exit(1);
     }
 };
